@@ -1,7 +1,3 @@
-% 10 Apr 2026 to run canal_simpler
-% run_dim is to test giving dimensional inputs (non-dimensionalisation
-% and re-dimensionalisation happens internally within canal_simpler)
-
 % CLEAR WORKSPACE
 set(0,'DefaultAxesFontsize',12,'DefaultTextFontsize',12,'DefaultTextInterpreter','tex');
 clear
@@ -41,15 +37,15 @@ pd.k_s = 8*((pd.rho_s-pd.rho_w)/pd.rho_w)^(1/2)*pd.g^(1/2)*pd.D_50^(3/2)*(8/pi)^
 pd.A_min = 0;           % minimum deposit area for erosion, m^2
 
 % DIMENSIONAL GEOMETRY AND INPUTS
-ad.x = linspace(-50e3,0,400)';                  % grid pts
-ad.Z_b = 0 -400/(pd.rho_w/pd.rho_i)+ 0*(ad.x);  % bed elevation
-ad.Z_s = ad.Z_b + ( 400 + 0.01*(-ad.x) );       % surface elevation
-ad.M_in = @(t) (10)/(ad.x(end)-ad.x(1))*ad.x.^0*t.^0;    % channel source
-ad.Ms_in = @(t) 0*ad.M_in(t);                   % channel sediment source
+ad.x = linspace(-50e3,0,400)';                  % grid pts, m
+ad.Z_b = 0 -400/(pd.rho_w/pd.rho_i)+ 0*(ad.x);  % bed elevation, m
+ad.Z_s = ad.Z_b + ( 400 + 0.01*(-ad.x) );       % surface elevation, m
+ad.M_in = @(t) (10)/(ad.x(end)-ad.x(1))*ad.x.^0*t.^0;    % channel source, m^2/s
+ad.Ms_in = @(t) 0*ad.M_in(t);                   % channel sediment source, m^2/s
 ad.xi_m = 1;                                    % index of moulin
 ad.S_m = 0;                                     % moulin cross-sectional area
-ad.Q_m = @(t) 0*10*t.^0;                          % moulin input
-ad.Qs_m = @(t) 0*t.^0;                          % moulin sediment input
+ad.Q_m = @(t) 0*10*t.^0;                          % moulin input, m^3/s
+ad.Qs_m = @(t) 0*t.^0;                          % moulin sediment input, m^3/s
 
 % RUN TOWARDS STEADY STATE WITH NO SEDIMENT TRANSPORT
 rem = pd.tau_s; pd.tau_s = inf;
